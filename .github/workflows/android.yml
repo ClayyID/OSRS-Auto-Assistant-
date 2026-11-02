@@ -1,6 +1,17 @@
 
 name: Build Android APK
+      - name: Extract Android project
+        run: |
+          ZIP_FILE="$(find . -maxdepth 1 -type f -iname '*.zip' -print -quit)"
 
+          if [ -z "$ZIP_FILE" ]; then
+            echo "Project ZIP not found!"
+            exit 1
+          fi
+
+          mkdir -p extracted
+          unzip -q "$ZIP_FILE" -d extracted
+          echo "ZIP extracted successfully!"
 on:
   workflow_dispatch:
   push:
